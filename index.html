@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101B35">
+<title>Mobile Planet – Your Everyday Tech Store (Demo)</title>
+<style>
+:root{--navy:#101B35;--blue:#2563EB;--blue-d:#1D4ED8;--bg:#F5F7FC;--teal:#19B5A5;--text:#172033;--muted:#64748B;--line:#E2E8F2;--onnavy:#C3CDE3;--shadow:0 2px 6px rgba(16,27,53,.06),0 10px 26px rgba(16,27,53,.07);--shadow-h:0 4px 10px rgba(16,27,53,.08),0 18px 38px rgba(37,99,235,.18)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1100px;margin:auto;padding:0 20px}
+section{padding:68px 0}
+h2{font-size:1.8rem;margin-bottom:8px;color:var(--navy)}
+h2::after{content:"";display:block;width:44px;height:4px;border-radius:2px;background:var(--teal);margin-top:8px}
+.sub{color:#58667C;margin:12px 0 28px}
+.demo{background:var(--blue);color:#fff;text-align:center;font-size:.85rem;padding:7px 12px}
+header{position:sticky;top:0;z-index:50;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.08);box-shadow:0 4px 18px rgba(16,27,53,.25)}
+nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+.logo{font-weight:800;font-size:1.25rem;display:flex;align-items:center;gap:8px;color:#fff}
+.logo b{color:#7BA3FF}
+.menu{display:flex;gap:22px;align-items:center}
+.menu a:not(.btn){color:#DDE5F5;padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.menu a:not(.btn):hover{color:#fff;border-color:var(--teal)}
+.btn{display:inline-block;background:var(--blue);color:#fff;border:2px solid var(--blue);padding:11px 22px;border-radius:10px;font-weight:600;cursor:pointer;font-size:1rem;transition:transform .2s,background .2s,box-shadow .2s,color .2s}
+.btn:hover{transform:translateY(-2px);background:var(--blue-d);border-color:var(--blue-d);box-shadow:0 8px 20px rgba(37,99,235,.35)}
+.btn.ghost{background:transparent;color:var(--blue)}
+.btn.ghost:hover{background:var(--blue);color:#fff}
+.burger{display:none;background:none;border:0;color:#fff;font-size:1.8rem;cursor:pointer}
+.hero{position:relative;overflow:hidden;color:#fff;padding:88px 0;background:radial-gradient(620px 420px at 85% 10%,rgba(37,99,235,.6),transparent 70%),radial-gradient(420px 320px at 65% 100%,rgba(25,181,165,.3),transparent 70%),linear-gradient(135deg,#101B35 0%,#172A55 100%)}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(circle at 70% 40%,#000,transparent 75%);mask-image:radial-gradient(circle at 70% 40%,#000,transparent 75%)}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.2fr 1fr;gap:30px;align-items:center}
+.hero h1{font-size:2.7rem;line-height:1.15;margin-bottom:16px;color:#fff}
+.hero h1 span{color:#6C9BFF}
+.hero p{color:var(--onnavy);margin-bottom:24px;max-width:540px}
+.hero .eyebrow{color:var(--teal);font-weight:700;letter-spacing:.12em;font-size:.85rem;margin-bottom:10px}
+.hero .btns{display:flex;gap:12px;flex-wrap:wrap}
+.hero .btn.ghost{color:#fff;border-color:rgba(255,255,255,.75)}
+.hero .btn.ghost:hover{background:#fff;color:var(--navy);border-color:#fff}
+.hero svg{animation:float 6s ease-in-out infinite;filter:drop-shadow(0 24px 40px rgba(0,0,0,.35))}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px}
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+.cat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 12px;text-align:center;cursor:pointer;color:var(--navy);font-size:1rem;font-weight:600;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s,border-color .2s}
+.cat:hover{border-color:var(--blue);transform:translateY(-4px);box-shadow:var(--shadow-h)}
+.cat .ic{font-size:2rem;display:block;margin-bottom:4px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.fbtn{background:#fff;color:var(--navy);border:1px solid #CBD5E1;padding:8px 15px;border-radius:20px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.fbtn:hover{border-color:var(--blue);color:var(--blue)}
+.fbtn.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.card{background:#fff;border-radius:16px;overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s,border-color .25s}
+.card:hover{transform:translateY(-5px);box-shadow:var(--shadow-h);border-color:#BFD0FA}
+.card svg{width:100%;height:160px;background:linear-gradient(135deg,#E6EDFF,#F5F7FC);border-bottom:1px solid var(--line)}
+.card .in{padding:16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card h3{color:var(--navy);font-size:1.05rem}
+.card .tag{font-size:.75rem;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.06em}
+.card p{color:var(--muted);font-size:.9rem;flex:1}
+.price{font-weight:800;font-size:1.15rem;color:var(--navy)}
+.cart-box{background:#fff;border-radius:16px;padding:22px;border:1px solid var(--line);box-shadow:var(--shadow)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.row small{color:var(--muted)}
+.qty button{background:#fff;color:var(--blue);border:1px solid var(--blue);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1.05rem;transition:background .2s,color .2s}
+.qty button:hover{background:var(--blue);color:#fff}
+.qty span{display:inline-block;min-width:32px;text-align:center;font-weight:600}
+.rm{background:none;border:0;color:#B42318;cursor:pointer;text-decoration:underline}
+.rm:hover{color:#7A1810}
+.total{font-size:1.2rem;font-weight:800;text-align:right;padding-top:14px;color:var(--navy)}
+.cart-box h3{color:var(--navy);border-left:4px solid var(--teal);padding-left:10px}
+.svc{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.svc div{background:#fff;padding:20px;border-radius:16px;border:1px solid var(--line);border-top:3px solid var(--teal);box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s}
+.svc div:hover{transform:translateY(-3px);box-shadow:var(--shadow-h)}
+.svc h3{color:var(--blue);margin-bottom:6px;font-size:1.05rem}
+.alt{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.alt .card,.alt .svc div,.alt .cart-box{background:#fff}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.two a{color:var(--blue);font-weight:600}
+.two a:hover{text-decoration:underline}
+form{display:grid;gap:12px}
+input,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #CBD5E1;background:#fff;color:var(--text);font:inherit;transition:border-color .2s,box-shadow .2s}
+input:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.2)}
+label{font-size:.9rem;color:var(--text);font-weight:600}
+.ok{color:#0B4F49;background:#E3F6F3;border-left:4px solid var(--teal);padding:10px 12px;border-radius:8px}
+.ok:empty{display:none}
+footer{background:var(--navy);padding:34px 0;text-align:center;color:var(--onnavy);font-size:.9rem;border-top:3px solid var(--teal)}
+footer b{color:#fff}
+#chatBtn{position:fixed;right:20px;bottom:20px;width:58px;height:58px;border-radius:50%;background:var(--blue);color:#fff;border:0;font-size:1.6rem;cursor:pointer;z-index:90;box-shadow:0 8px 22px rgba(37,99,235,.45);transition:transform .2s,background .2s}
+#chatBtn:hover{transform:scale(1.07);background:var(--blue-d)}
+#chatBtn::after{content:"";position:absolute;top:3px;right:3px;width:13px;height:13px;border-radius:50%;background:var(--teal);border:2px solid #fff}
+#chat{position:fixed;right:20px;bottom:90px;width:340px;max-width:calc(100vw - 40px);height:460px;max-height:70vh;background:var(--bg);border:1px solid var(--line);border-radius:16px;display:none;flex-direction:column;z-index:90;overflow:hidden;box-shadow:0 20px 50px rgba(16,27,53,.3)}
+#chat.open{display:flex}
+.ch{background:var(--navy);color:#fff;padding:10px 14px;border-bottom:3px solid var(--teal);display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.ch small{display:block;font-size:.72rem;color:var(--onnavy)}
+.cx{background:none;border:0;color:#fff;font-size:1.3rem;cursor:pointer;line-height:1;padding:4px 8px;border-radius:6px;transition:background .2s}
+.cx:hover{background:rgba(255,255,255,.15)}
+#msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.m{max-width:85%;padding:9px 12px;border-radius:14px;font-size:.92rem;white-space:pre-line;line-height:1.45}
+.m.bot{background:#fff;color:var(--text);border:1px solid var(--line);border-left:3px solid var(--teal);align-self:flex-start}
+.m.me{background:var(--blue);color:#fff;align-self:flex-end}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:8px 10px;border-top:1px solid var(--line);background:#fff;flex-shrink:0}
+.chip{flex:0 0 auto;background:#fff;color:var(--blue);border:1px solid #BFD0FA;border-radius:16px;padding:7px 12px;font-size:.82rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s,border-color .2s}
+.chip:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+.cf{display:flex;gap:6px;padding:10px;border-top:1px solid var(--line);background:#fff}
+.cf input{flex:1;font-size:16px}
+.cf button{width:auto;padding:0 14px}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+header :focus-visible,.hero :focus-visible,footer :focus-visible,.ch :focus-visible{outline-color:#fff}
+@media(max-width:800px){
+ .hero .wrap,.two{grid-template-columns:1fr}
+ .hero{padding:60px 0}
+ .hero h1{font-size:2rem}
+ .hero svg{max-width:260px!important}
+ section{padding:50px 0}
+ .burger{display:block}
+ .menu{display:none;position:absolute;top:100%;left:0;right:0;background:var(--navy);flex-direction:column;align-items:flex-start;padding:16px 20px;border-top:1px solid rgba(255,255,255,.1);box-shadow:0 12px 24px rgba(16,27,53,.3)}
+ .menu.show{display:flex}
+}
+@media(max-width:520px){#chat{left:0;right:0;bottom:0;width:100%;max-width:100%;height:85vh;height:85dvh;max-height:none;border-radius:16px 16px 0 0}body.chat-open #chatBtn{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="demo">⚠ DEMONSTRATION WEBSITE – all business details are fictional. No real orders or payments.</div>
+<header>
+<div class="wrap"><nav>
+<a href="#home" class="logo" aria-label="Mobile Planet home"><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="9" fill="#2563EB"/><ellipse cx="16" cy="16" rx="15" ry="5" fill="none" stroke="#19B5A5" stroke-width="2" transform="rotate(-20 16 16)"/></svg>Mobile <b>Planet</b></a>
+<button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">☰</button>
+<div class="menu" id="menu">
+<a href="#home">Home</a><a href="#categories">Categories</a><a href="#products">Products</a><a href="#service">Service</a><a href="#about">About</a><a href="#contact">Contact</a>
+<a href="#cart" class="btn">🛒 Cart (<span id="cc">0</span>)</a>
+</div></nav></div>
+</header>
+
+<main>
+<section class="hero" id="home"><div class="wrap">
+<div>
+<p class="eyebrow">YOUR EVERYDAY TECH STORE</p>
+<h1>Upgrade Your Tech. <span>Upgrade Your Life.</span></h1>
+<p>Mobile Planet is a demonstration mobile phones and accessories shop in Blue Area, Islamabad, delivering to Islamabad and Rawalpindi. Browse earbuds, chargers, power banks and more.</p>
+<div class="btns"><a class="btn" href="#products">Shop Now</a><a class="btn ghost" href="#contact">Contact Us</a></div>
+</div>
+<svg viewBox="0 0 300 300" role="img" aria-label="Phone illustration" style="width:100%;max-width:340px;margin:auto">
+<defs><linearGradient id="scr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3B82F6"/><stop offset="1" stop-color="#1E40AF"/></linearGradient></defs>
+<circle cx="150" cy="150" r="130" fill="#2563EB" opacity=".18"/>
+<circle cx="150" cy="150" r="104" fill="none" stroke="#fff" stroke-opacity=".12" stroke-dasharray="4 8"/>
+<rect x="95" y="40" width="110" height="220" rx="18" fill="#0B1226" stroke="#2563EB" stroke-width="4"/>
+<rect x="104" y="62" width="92" height="170" rx="6" fill="url(#scr)"/>
+<rect x="135" y="48" width="30" height="6" rx="3" fill="#2563EB"/>
+<circle cx="150" cy="150" r="26" fill="none" stroke="#fff" stroke-width="3"/><circle cx="150" cy="150" r="9" fill="#fff"/>
+<ellipse cx="150" cy="150" rx="62" ry="18" fill="none" stroke="#19B5A5" stroke-width="2.5" transform="rotate(-20 150 150)"/>
+<circle cx="205" cy="133" r="6" fill="#19B5A5"/>
+</svg>
+</div></section>
+
+<section id="featured" class="alt"><div class="wrap">
+<h2>Featured Products</h2><p class="sub">Popular picks from our demo catalogue.</p>
+<div class="grid" id="featGrid"></div>
+</div></section>
+
+<section id="categories"><div class="wrap">
+<h2>Popular Categories</h2><p class="sub">Tap a category to filter products.</p>
+<div class="cats" id="catGrid"></div>
+</div></section>
+
+<section id="products" class="alt"><div class="wrap">
+<h2>All Products</h2><p class="sub">Prices in Pakistani rupees (demo prices).</p>
+<div class="filters" id="filters" role="group" aria-label="Product filters"></div>
+<div class="grid" id="prodGrid"></div>
+</div></section>
+
+<section id="cart"><div class="wrap">
+<h2>Shopping Cart</h2><p class="sub">Demonstration cart only – no payment is taken and nothing is stored.</p>
+<div class="cart-box" id="cartBox"></div>
+</div></section>
+
+<section id="service" class="alt"><div class="wrap">
+<h2>Customer Service</h2><p class="sub">Demo shop information.</p>
+<div class="svc">
+<div><h3>🚚 Delivery</h3>Islamabad and Rawalpindi.</div>
+<div><h3>💵 Payment</h3>Cash on delivery and cash at shop.</div>
+<div><h3>🕙 Opening Hours</h3>Mon–Sat, 10 AM – 10 PM. Sunday closed.</div>
+<div><h3>🛡 Warranty</h3>According to product terms.</div>
+</div></div></section>
+
+<section id="about"><div class="wrap">
+<h2>About Us</h2>
+<p class="sub" style="max-width:700px">Mobile Planet is a demonstration mobile accessories store serving Islamabad and Rawalpindi. It was created as a portfolio project to show how a small shop website can look and work, including a product catalogue, a cart and a simulated assistant. All shop details on this site are fictional.</p>
+</div></section>
+
+<section id="contact" class="alt"><div class="wrap two">
+<div>
+<h2>Contact</h2><p class="sub">Demo contact details.</p>
+<p>📍 Blue Area, Islamabad, Pakistan</p>
+<p>📞 <a href="tel:+923001234567">+92 300 1234567</a></p>
+<p>💬 WhatsApp: +92 300 1234567</p>
+<p>🕙 Mon–Sat, 10 AM – 10 PM · Sunday closed</p>
+</div>
+<form id="cform" novalidate>
+<label for="n">Name</label><input id="n" required>
+<label for="e">Email</label><input id="e" type="email" required>
+<label for="t">Message</label><textarea id="t" rows="4" required></textarea>
+<button class="btn" type="submit">Send (Demo)</button>
+<p class="ok" id="cok" role="status"></p>
+<small style="color:var(--muted)">Demo form: nothing is sent or stored.</small>
+</form>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+<p><b>Mobile Planet</b> – Your Everyday Tech Store</p>
+<p>Demonstration website. Fictional business. No real payments or orders.</p>
+</div></footer>
+
+<button id="chatBtn" aria-label="Open Planet Assistant chat" aria-expanded="false">💬</button>
+<div id="chat" role="dialog" aria-label="Planet Assistant">
+<div class="ch"><div><b>Planet Assistant</b><small>Simulated demo chatbot – predefined answers, not a real AI service</small></div><button class="cx" id="chatClose" type="button" aria-label="Close chat">✕</button></div>
+<div id="msgs" aria-live="polite"></div>
+<div class="chips" id="chips" aria-label="Suggested questions"></div>
+<form class="cf" id="chatForm"><input id="chatIn" autocomplete="off" placeholder="Type your question…" aria-label="Your question"><button class="btn" type="submit">Send</button></form>
+</div>
+
+<script>
+/* ===== BUSINESS DATA (edit here to use real shop information) ===== */
+var SHOP={name:"Mobile Planet",location:"Blue Area, Islamabad, Pakistan",phone:"+92 300 1234567",whatsapp:"+92 300 1234567",hours:"Monday to Saturday, 10 AM to 10 PM. Sunday: Closed.",delivery:"Islamabad and Rawalpindi",payment:"Cash on delivery and cash at shop"};
+var CATS=[["Wireless Earbuds","🎧"],["Chargers","🔌"],["Power Banks","🔋"],["Phone Covers","📱"],["USB Cables","🔗"],["Bluetooth Speakers","🔊"],["Screen Protectors","🛡"],["Gaming Accessories","🎮"]];
+var PRODUCTS=[
+{id:1,name:"Mobile Planet Wireless Earbuds",price:2500,cat:"Wireless Earbuds",ic:"🎧",desc:"Compact true wireless earbuds with a charging case."},
+{id:2,name:"Fast Charger 25W",price:1800,cat:"Chargers",ic:"🔌",desc:"25W fast wall charger for compatible phones."},
+{id:3,name:"Power Bank 20,000mAh",price:4500,cat:"Power Banks",ic:"🔋",desc:"High-capacity power bank for several charges on the go."},
+{id:4,name:"Premium iPhone Protective Cover",price:900,cat:"Phone Covers",ic:"📱",desc:"Slim protective cover with a secure fit."},
+{id:5,name:"Type-C Fast Charging Cable",price:500,cat:"USB Cables",ic:"🔗",desc:"Durable Type-C cable for fast charging and data."},
+{id:6,name:"Portable Bluetooth Speaker",price:3200,cat:"Bluetooth Speakers",ic:"🔊",desc:"Pocket-friendly speaker with wireless Bluetooth audio."},
+{id:7,name:"Tempered Glass Screen Protector",price:400,cat:"Screen Protectors",ic:"🛡",desc:"Tempered glass to help guard your screen from scratches."},
+{id:8,name:"Gaming Headphones",price:2800,cat:"Gaming Accessories",ic:"🎮",desc:"Over-ear headphones with a mic for gaming."}
+];
+/* ===== HELPERS ===== */
+function $(i){return document.getElementById(i)}
+function rs(n){return "Rs. "+n.toLocaleString("en-US")}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+/* Local graphic used instead of photos (works offline) */
+function art(p){return '<svg viewBox="0 0 230 160" role="img" aria-label="'+esc(p.name)+'"><circle cx="115" cy="80" r="56" fill="#2563EB" opacity=".18"/><circle cx="115" cy="80" r="40" fill="none" stroke="#2563EB" stroke-width="2"/><circle cx="160" cy="38" r="5" fill="#19B5A5"/><text x="115" y="96" text-anchor="middle" font-size="48">'+p.ic+'</text></svg>'}
+function cardHTML(p){return '<article class="card">'+art(p)+'<div class="in"><span class="tag">'+esc(p.cat)+'</span><h3>'+esc(p.name)+'</h3><p>'+esc(p.desc)+'</p><span class="price">'+rs(p.price)+'</span><button class="btn" data-add="'+p.id+'">Add to Cart</button></div></article>'}
+/* ===== RENDER ===== */
+var current="All";
+function renderFeatured(){$("featGrid").innerHTML=[1,3,6,8].map(function(id){return cardHTML(PRODUCTS[id-1])}).join("")}
+function renderCats(){$("catGrid").innerHTML=CATS.map(function(c){return '<button class="cat" data-cat="'+c[0]+'"><span class="ic">'+c[1]+'</span>'+c[0]+'</button>'}).join("")}
+function renderFilters(){$("filters").innerHTML=["All"].concat(CATS.map(function(c){return c[0]})).map(function(n){return '<button class="fbtn'+(n===current?' on':'')+'" data-f="'+n+'" aria-pressed="'+(n===current)+'">'+n+'</button>'}).join("")}
+function renderProducts(){var list=PRODUCTS.filter(function(p){return current==="All"||p.cat===current});$("prodGrid").innerHTML=list.map(cardHTML).join("");renderFilters()}
+/* ===== CART ===== */
+var cart={};
+function add(id){cart[id]=(cart[id]||0)+1;renderCart()}
+function renderCart(){
+ var ids=Object.keys(cart),count=0,sub=0,h="";
+ ids.forEach(function(id){var p=PRODUCTS[id-1],q=cart[id];count+=q;sub+=p.price*q;
+  h+='<div class="row"><div><b>'+esc(p.name)+'</b><br><small>'+rs(p.price)+' each</small></div><div class="qty"><button data-q="'+id+'" data-d="-1" aria-label="Decrease quantity">−</button><span>'+q+'</span><button data-q="'+id+'" data-d="1" aria-label="Increase quantity">+</button></div><div>'+rs(p.price*q)+'</div><button class="rm" data-rm="'+id+'">Remove</button></div>'});
+ $("cc").textContent=count;
+ if(!ids.length){$("cartBox").innerHTML="<p>Your cart is empty. Add a product to try the demo cart.</p>";return}
+ $("cartBox").innerHTML=h+'<div class="total">Subtotal: '+rs(sub)+'</div><div class="total">Total: '+rs(sub)+'</div><h3 style="margin-top:14px">Order Summary (Demo)</h3><p>'+count+' item(s) · Delivery: '+SHOPdelivery()+' · Payment: '+esc(SHOP.payment)+'</p><p style="color:var(--muted);font-size:.85rem">Demonstration only – no order is placed.</p><button class="btn" id="clr" style="margin-top:10px">Clear Cart</button>';
+}
+function SHOPdelivery(){return esc(SHOP.delivery)}
+/* ===== CHATBOT (simulated; swap botReply() for a real AI call later) ===== */
+var NOTICE="This is a simulated demo chatbot using predefined answers. It is not a real AI service.";
+var CONTACT=" Please contact our shop representative: "+SHOP.phone+".";
+var UNKNOWN="I’m not sure about that, and that information isn’t available to me."+CONTACT;
+var SUGGESTIONS=["Show me earbuds","What are your opening hours?","Do you deliver to Rawalpindi?","What is your cheapest product?","What payment options do you have?","Where is the shop?"];
+var PROD_WORDS=[
+ [1,/\b(ear ?buds?|ear ?phones?|airpods?|buds|tws)\b/],
+ [2,/\b(chargers?|adapters?|adaptors?)\b/],
+ [3,/\b(power ?banks?|battery pack)\b/],
+ [4,/\b(covers?|cases?)\b/],
+ [5,/\b(cables?|usb|type ?c|wire)\b/],
+ [6,/\b(speakers?)\b/],
+ [7,/\b(screen protectors?|protectors?|tempered|glass)\b/],
+ [8,/\b(head ?phones?|head ?sets?|gaming)\b/]
+];
+function norm(s){return " "+s.toLowerCase().replace(/(\d),(?=\d)/g,"$1").replace(/[^a-z0-9]+/g," ").trim()+" "}
+function t(q,re){return re.test(q)}
+function line(p){return p.name+" – "+rs(p.price)}
+function botReply(raw){
+ var q=norm(raw),words=q.trim()?q.trim().split(" ").length:0;
+ if(!words)return "Please type a question, or tap one of the suggestions below.";
+ var ids=[];PROD_WORDS.forEach(function(x){if(x[1].test(q))ids.push(x[0])});
+ var priceQ=t(q,/\b(price|prices|cost|costs|how much|rate|rs|rupees?|pkr|qeemat|kitna|kitne|kitni)\b/);
+ var buyQ=t(q,/\b(buy|purchase|order|want|get)\b/);
+ var sorted=PRODUCTS.slice().sort(function(a,b){return a.price-b.price});
+ /* polite small talk */
+ if(t(q,/\b(thanks|thank you|thx|shukria)\b/))return "You’re welcome! Is there anything else I can help with?";
+ if(t(q,/\b(bye|goodbye|allah hafiz|khuda hafiz)\b/))return "Goodbye! Thanks for visiting Mobile Planet.";
+ if(t(q,/\b(real ai|are you (an? )?(ai|bot|robot|human|real)|who are you|what are you|chatgpt)\b/))return NOTICE;
+ if(words<=5&&t(q,/\b(hi|hello|hey|salam|assalam|aoa|good morning|good afternoon|good evening)\b/))return "Hello! I can help with products, prices, delivery, opening hours, location and payment. What would you like to know?";
+ if(t(q,/\b(help|what can you)\b/))return "You can ask me about our products and prices, delivery areas, opening hours, shop location and payment options. Try the suggestion buttons below.";
+ /* things we must NOT invent */
+ if(t(q,/\b(discounts?|sale|offers?|deals?|promo|coupon|cheaper|negotiate|best price|last price)\b/))return "I don’t have any information about discounts or offers. Prices on this website are the demo prices."+CONTACT;
+ if(t(q,/\b(return|returns|refund|exchange|replacement|money back)\b/))return "I don’t have information about returns, refunds or exchanges."+CONTACT;
+ if(t(q,/\b(warrant\w*|guarantee)\b/))return "Warranty is according to product terms. I don’t have any further details."+CONTACT;
+ if(t(q,/\b(in stock|out of stock|stock|restock|how many|pieces left)\b/))return "I don’t have stock availability information."+CONTACT;
+ if(t(q,/\b(delivery|shipping) (charges?|fees?|cost|time|days?)\b|how long|how many days|free delivery/))return "I don’t have information about delivery charges or delivery times. We deliver to "+SHOP.delivery+"."+CONTACT;
+ /* price comparisons */
+ if(t(q,/\b(cheapest|lowest|least expensive|most affordable|cheap|sasta|sasti)\b/)){var c=sorted[0];return "Our cheapest listed product is the "+c.name+" at "+rs(c.price)+"."}
+ if(t(q,/\b(most expensive|highest|costliest|priciest|expensive)\b/)){var e=sorted[sorted.length-1];return "Our most expensive listed product is the "+e.name+" at "+rs(e.price)+"."}
+ var bm=q.match(/\b(under|below|less than|within|upto|up to|max|maximum|budget|around)\b\D{0,12}?(\d+)/);
+ if(bm){var lim=+bm[2],ok=sorted.filter(function(p){return p.price<=lim});
+  return ok.length?"Products up to "+rs(lim)+":\n"+ok.map(function(p){return "• "+line(p)}).join("\n"):"No listed product is priced at or below "+rs(lim)+". Our lowest listed price is "+rs(sorted[0].price)+"."}
+ /* delivery */
+ var hoursW=t(q,/\b(hours?|open|opens|opening|close|closes|closing|timings?|schedule|sunday|monday|saturday|weekends?|khula)\b/);
+ var locW=t(q,/\b(where|location|address|located|find us|visit|directions|map|blue area|kahan)\b/);
+ var other=t(q,/\b(lahore|karachi|peshawar|quetta|multan|faisalabad|sialkot|other cit(y|ies)|outside|abroad|international)\b/);
+ var pk=t(q,/\b(rawalpindi|pindi|islamabad)\b/);
+ if(t(q,/\b(deliver|delivery|delivered|shipping|ship|courier|dispatch)\b/)||((pk||other)&&!locW&&!hoursW)){
+  if(other)return "Our listed delivery areas are Islamabad and Rawalpindi. I don’t have information about other cities.";
+  if(t(q,/\b(rawalpindi|pindi)\b/))return "Yes, we deliver to Rawalpindi (and Islamabad).";
+  if(pk)return "Yes, we deliver to Islamabad (and Rawalpindi).";
+  return "We deliver to "+SHOP.delivery+"."}
+ /* hours, location, payment, contact */
+ if(hoursW){return t(q,/\bsunday\b/)?"We’re closed on Sundays. We’re open Monday to Saturday, 10 AM to 10 PM.":"We’re open Monday to Saturday, 10 AM to 10 PM. Sunday: closed."}
+ if(locW)return "Our demo shop is in "+SHOP.location+".";
+ if(t(q,/\b(card|credit|debit|online|easypaisa|jazzcash|bank transfer|bank account|transfer|installments?|visa|mastercard)\b/))return "Our listed payment options are cash on delivery and cash at the shop. I don’t have information about other payment methods.";
+ if(t(q,/\b(pay|paying|payment|payments|cash|cod)\b/))return "You can pay by cash on delivery or cash at the shop.";
+ if(t(q,/\b(whatsapp|call|contact|reach|representative|agent|number|your phone|phone no)\b/))return "Demo phone/WhatsApp: "+SHOP.phone+". Hours: Monday to Saturday, 10 AM to 10 PM.";
+ /* products */
+ if(ids.length===1){var p=PRODUCTS[ids[0]-1];
+  if(t(q,/\bavailab\w*\b/))return "The "+p.name+" is listed in our demo catalogue at "+rs(p.price)+". I don’t have stock availability information.";
+  if(priceQ)return "The "+p.name+" is priced at "+rs(p.price)+".";
+  return line(p)+"\n"+p.desc+(buyQ?"\nUse the Add to Cart button in the Products section.":"")}
+ if(ids.length>1)return ids.map(function(i){return "• "+line(PRODUCTS[i-1])}).join("\n");
+ if(t(q,/\b(categor(y|ies)|types|kinds|sections|what do you (sell|have))\b/))return "Our categories: "+CATS.map(function(c){return c[0]}).join(", ")+".";
+ if(t(q,/\b(phones?|smartphones?|iphones?|samsung|oppo|vivo|xiaomi|infinix|tecno)\b/))return "Our demo catalogue only lists accessories. I don’t have information about mobile phones."+CONTACT;
+ if(t(q,/\b(order|checkout|track)\b/))return "This is a demonstration site, so real orders can’t be placed. You can try the demo cart in the Cart section.";
+ if(priceQ||t(q,/\b(products?|catalogue|catalog|items|available|everything|list)\b/))return "Our demo catalogue:\n"+PRODUCTS.map(function(p){return "• "+line(p)}).join("\n");
+ return UNKNOWN;
+}
+function say(txt,who){var d=document.createElement("div");d.className="m "+who;d.textContent=txt;$("msgs").appendChild(d);$("msgs").scrollTop=$("msgs").scrollHeight}
+function ask(v){say(v,"me");setTimeout(function(){say(botReply(v),"bot")},300)}
+function setChat(o){$("chat").classList.toggle("open",o);document.body.classList.toggle("chat-open",o);$("chatBtn").setAttribute("aria-expanded",o);if(o&&window.innerWidth>520)$("chatIn").focus()}
+
+/* ===== EVENTS ===== */
+document.addEventListener("click",function(e){
+ var t=e.target;
+ if(t.dataset.add)add(+t.dataset.add);
+ if(t.dataset.q){var id=t.dataset.q;cart[id]+=+t.dataset.d;if(cart[id]<1)delete cart[id];renderCart()}
+ if(t.dataset.rm){delete cart[t.dataset.rm];renderCart()}
+ if(t.id==="clr"){cart={};renderCart()}
+ var cb=t.closest&&t.closest("[data-cat]");
+ if(cb){current=cb.dataset.cat;renderProducts();$("products").scrollIntoView()}
+ if(t.dataset.f){current=t.dataset.f;renderProducts()}
+ if(t.closest&&t.closest("#menu a"))$("menu").classList.remove("show");
+});
+$("burger").onclick=function(){var s=$("menu").classList.toggle("show");this.setAttribute("aria-expanded",s)};
+$("chatBtn").onclick=function(){setChat(!$("chat").classList.contains("open"))};
+$("chatClose").onclick=function(){setChat(false);$("chatBtn").focus()};
+document.addEventListener("keydown",function(e){if(e.key==="Escape")setChat(false)});
+$("chips").innerHTML=SUGGESTIONS.map(function(x){return '<button type="button" class="chip" data-chip="'+esc(x)+'">'+esc(x)+'</button>'}).join("");
+$("chips").onclick=function(e){if(e.target.dataset.chip)ask(e.target.dataset.chip)};
+$("chatForm").onsubmit=function(e){e.preventDefault();var v=$("chatIn").value.trim();if(!v)return;$("chatIn").value="";ask(v)};
+$("cform").onsubmit=function(e){e.preventDefault();
+ if(!$("n").value.trim()||!$("e").value.includes("@")||!$("t").value.trim()){$("cok").textContent="Please fill in all fields with a valid email.";return}
+ $("cok").textContent="Thank you! (Demo only – nothing was sent or stored.)";this.reset()};
+renderFeatured();renderCats();renderProducts();renderCart();
+say("Hello! Welcome to Mobile Planet. How can I help you today?","bot");
+say(NOTICE+" Tap a suggestion below or type your question.","bot");
+</script>
+</body>
+</html>
